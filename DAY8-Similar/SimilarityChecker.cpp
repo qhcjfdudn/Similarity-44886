@@ -6,7 +6,10 @@ using std::invalid_argument;
 
 class SimilarityChecker {
 public:
-	double getLengthSimilarity(string source, string target) {
+	SimilarityChecker(string origin)
+		: origin_{ origin } {}
+
+	double getLengthSimilarity(string target) {
 		for (const auto& c : target) {
 			if (c >= 'A' && c <= 'Z')
 				continue;
@@ -14,4 +17,6 @@ public:
 			throw invalid_argument("문자열은 알파벳 대문자이어야 합니다.");
 		}
 	}
+private:
+	string origin_;
 };

@@ -6,10 +6,9 @@ using std::string;
 using std::invalid_argument;
 
 TEST(SimilarityChecker, ThrowExceptionWhenInvalidCase) {
-	SimilarityChecker app;
-
-	string source = "ASD";
+	SimilarityChecker app{ "ASD" };
 	string target = "ASq";
-	EXPECT_THROW(app.getLengthSimilarity(source, target)
+
+	EXPECT_THROW(app.getLengthSimilarity(target)
 		, invalid_argument);
 }
