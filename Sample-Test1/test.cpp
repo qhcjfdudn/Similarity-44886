@@ -22,3 +22,19 @@ TEST(SimilarityChecker, ThrowExceptionWhenInvalidCase) {
 	EXPECT_THROW(app.getLengthSimilarity(test)
 		, invalid_argument);
 }
+TEST(SimilarityChecker, IsSameLength) {
+	SimilarityChecker app{ "ASD" };
+	string test = "DSA";
+
+	double expected = 60;
+	double actual = app.getLengthSimilarity(test);
+	EXPECT_EQ(expected, actual);
+}
+TEST(SimilarityChecker, IsOverDoubleLength) {
+	SimilarityChecker app{ "A" };
+	string test = "BB";
+
+	double expected = 0;
+	double actual = app.getLengthSimilarity(test);
+	EXPECT_EQ(expected, actual);
+}

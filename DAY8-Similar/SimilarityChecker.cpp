@@ -1,8 +1,8 @@
 #include <string>
 #include <stdexcept>
+#include <cmath>
 
-using std::string;
-using std::invalid_argument;
+using namespace std;
 
 class SimilarityChecker {
 public:
@@ -23,9 +23,28 @@ public:
 	double getLengthSimilarity(const string& target) {
 		raiseExceptionWhenInvalidCase(target);
 
-		return 0;
+		int minLength = getMinLength(target);
+		int maxLength = getMaxLength(target);
+
+		if (minLength == maxLength)
+			return MAX_SCORE;
+
+		if (minLength * 2 <= maxLength)
+			return MIN_SCORE;
+
+		return MIN_SCORE;
 	}
 
 private:
+	const int MAX_SCORE = 60;
+	const int MIN_SCORE = 0;
+
 	string origin_;
+
+	int getMinLength(const string& target) {
+		return static_cast<int>(min(origin_.length(), target.length()));
+	}
+	int getMaxLength(const string& target) {
+		return static_cast<int>(max(origin_.length(), target.length()));
+	}
 };
