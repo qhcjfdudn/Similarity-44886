@@ -11,15 +11,14 @@ TEST(SimilarityChecker, ThrowExceptionWhenOriginIsInvalidCase) {
 		SimilarityChecker app{ "ASd" };
 		FAIL();
 	}
-	catch (exception& e) {
+	catch (...) {
 		// PASS
 	}
 }
-
 TEST(SimilarityChecker, ThrowExceptionWhenInvalidCase) {
 	SimilarityChecker app{ "ASD" };
-	string target = "ASq";
+	string test = "ASq";
 
-	EXPECT_THROW(app.getLengthSimilarity(target)
+	EXPECT_THROW(app.getLengthSimilarity(test)
 		, invalid_argument);
 }

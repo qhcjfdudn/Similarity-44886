@@ -6,11 +6,11 @@ using std::invalid_argument;
 
 class SimilarityChecker {
 public:
-	SimilarityChecker(string origin)
+	SimilarityChecker(const string& origin)
 		: origin_{ origin } {
-		raiseException(origin);
+		raiseExceptionWhenInvalidCase(origin);
 	}
-	void raiseException(std::string& str)
+	void raiseExceptionWhenInvalidCase(const std::string& str)
 	{
 		for (const auto& c : str) {
 			if (c >= 'A' && c <= 'Z')
@@ -20,8 +20,8 @@ public:
 		}
 	}
 
-	double getLengthSimilarity(string target) {
-		raiseException(target);
+	double getLengthSimilarity(const string& target) {
+		raiseExceptionWhenInvalidCase(target);
 
 		return 0;
 	}
