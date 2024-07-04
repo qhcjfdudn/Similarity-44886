@@ -54,10 +54,9 @@ private:
 		return len1 == len2;
 	}
 	
-	bool isOverDoubleLength(int len1, int len2)
+	bool isOverDoubleLength(int minLength, int maxLength)
 	{
-		return len1 * 2 <= len2
-			|| len2 * 2 <= len1;
+		return minLength * 2 <= maxLength;
 	}
 	
 	double getSubScore(int minLength, int maxLength)
