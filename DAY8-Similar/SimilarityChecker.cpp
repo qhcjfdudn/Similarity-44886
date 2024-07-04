@@ -10,6 +10,28 @@ public:
 		: origin_{ origin } {
 		raiseExceptionWhenInvalidCase(origin);
 	}
+
+	double getLengthSimilarity(const string& test) {
+		raiseExceptionWhenInvalidCase(test);
+
+		int minLength = getMinLength(test);
+		int maxLength = getMaxLength(test);
+
+		if (isSameLength(minLength, maxLength))
+			return MAX_SCORE;
+
+		if (isOverDoubleLength(minLength, maxLength))
+			return MIN_SCORE;
+
+		return getSubScore(minLength, maxLength);
+	}
+
+private:
+	const int MAX_SCORE = 60;
+	const int MIN_SCORE = 0;
+
+	string origin_;
+	
 	void raiseExceptionWhenInvalidCase(const std::string& str)
 	{
 		for (const auto& c : str) {
@@ -20,31 +42,26 @@ public:
 		}
 	}
 
-	double getLengthSimilarity(const string& target) {
-		raiseExceptionWhenInvalidCase(target);
-
-		int minLength = getMinLength(target);
-		int maxLength = getMaxLength(target);
-
-		if (minLength == maxLength)
-			return MAX_SCORE;
-
-		if (minLength * 2 <= maxLength)
-			return MIN_SCORE;
-
-		return MIN_SCORE;
+	int getMinLength(const string& test) {
+		return static_cast<int>(min(origin_.length(), test.length()));
 	}
-
-private:
-	const int MAX_SCORE = 60;
-	const int MIN_SCORE = 0;
-
-	string origin_;
-
-	int getMinLength(const string& target) {
-		return static_cast<int>(min(origin_.length(), target.length()));
+	int getMaxLength(const string& test) {
+		return static_cast<int>(max(origin_.length(), test.length()));
 	}
-	int getMaxLength(const string& target) {
-		return static_cast<int>(max(origin_.length(), target.length()));
+	
+	bool isSameLength(int len1, int len2)
+	{
+		return len1 == len2;
+	}
+	
+	bool isOverDoubleLength(int len1, int len2)
+	{
+		return len1 * 2 <= len2
+			|| len2 * 2 <= len1;
+	}
+	
+	double getSubScore(int minLength, int maxLength)
+	{
+		return MAX_SCORE - (maxLength - minLength) * MAX_SCORE / minLength;
 	}
 };

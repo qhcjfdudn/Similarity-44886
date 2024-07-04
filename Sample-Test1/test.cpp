@@ -6,6 +6,13 @@ using std::string;
 using std::invalid_argument;
 using std::exception;
 
+class SimilarityCheckerFixture : public testing::Test {
+public:
+	void checkTestCase(double expected, double actual) {
+		EXPECT_EQ(expected, actual);
+	}
+};
+
 TEST(SimilarityChecker, ThrowExceptionWhenOriginIsInvalidCase) {
 	try {
 		SimilarityChecker app{ "ASd" };
@@ -22,19 +29,23 @@ TEST(SimilarityChecker, ThrowExceptionWhenInvalidCase) {
 	EXPECT_THROW(app.getLengthSimilarity(test)
 		, invalid_argument);
 }
-TEST(SimilarityChecker, IsSameLength) {
+TEST_F(SimilarityCheckerFixture, IsSameLength) {
 	SimilarityChecker app{ "ASD" };
 	string test = "DSA";
-
-	double expected = 60;
-	double actual = app.getLengthSimilarity(test);
-	EXPECT_EQ(expected, actual);
+	checkTestCase(60, app.getLengthSimilarity(test));
 }
-TEST(SimilarityChecker, IsOverDoubleLength) {
+TEST_F(SimilarityCheckerFixture, IsOverDoubleLength) {
 	SimilarityChecker app{ "A" };
 	string test = "BB";
-
-	double expected = 0;
-	double actual = app.getLengthSimilarity(test);
-	EXPECT_EQ(expected, actual);
+	checkTestCase(0, app.getLengthSimilarity(test));
+}
+TEST_F(SimilarityCheckerFixture, IsSubScore) {
+	SimilarityChecker app{ "AAABB" };
+	string test = "BAA";
+	checkTestCase(20, app.getLengthSimilarity(test));
+}
+TEST_F(SimilarityCheckerFixture, IsSubScore2) {
+	SimilarityChecker app{ "AA" };
+	string test = "AAE";
+	checkTestCase(30, app.getLengthSimilarity(test));
 }
